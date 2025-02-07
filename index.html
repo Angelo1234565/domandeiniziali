@@ -1,1 +1,157 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domande e Risposte</title>
+    <style>
+        body {
+            background-image: url('https://github.com/Angelo1234565/domandeiniziali/raw/main/avanti.png');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .buttons {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .question-container {
+            display: none;
+            margin-top: 20px;
+        }
+        .question-box {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        .answers {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .answer {
+            background-color: #444;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .answer:hover {
+            background-color: #555;
+        }
+        .feedback {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .feedback div {
+            width: 30px;
+            height: 30px;
+            background-color: #ccc;
+            border-radius: 50%;
+        }
+        .correct {
+            background-color: green;
+        }
+        .incorrect {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="buttons">
+        <button onclick="showQuestion('professoressa')">Domande Professoressa</button>
+        <button onclick="showQuestion('salvini')">Domande Salvini</button>
+        <button onclick="showQuestion('loki')">Domande Loki</button>
+        <button onclick="showQuestion('parche')">Domande Parche</button>
+        <button onclick="showQuestion('iettatore')">Domande Iettatore</button>
+    </div>
 
+    <div class="container">
+        <div id="question-container" class="question-container">
+            <div id="question-box" class="question-box">
+                <p id="question-text"></p>
+            </div>
+            <div class="answers">
+                <div id="answer1" class="answer" onclick="checkAnswer(1)"></div>
+                <div id="answer2" class="answer" onclick="checkAnswer(2)"></div>
+            </div>
+            <div class="feedback" id="feedback">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = {
+            professoressa: {
+                question: "Qual è il tuo nome?",
+                answers: ["Anna", "Maria"],
+                correct: 1
+            },
+            salvini: {
+                question: "Cosa pensa Salvini dell'Europa?",
+                answers: ["Positiva", "Negativa"],
+                correct: 2
+            },
+            loki: {
+                question: "Chi è Loki?",
+                answers: ["Dio del caos", "Dio della guerra"],
+                correct: 1
+            },
+            parche: {
+                question: "Cosa si intende per 'parche'?",
+                answers: ["Destinato", "Sfortunato"],
+                correct: 2
+            },
+            iettatore: {
+                question: "Cosa fa un iettatore?",
+                answers: ["Porta sfortuna", "Porta fortuna"],
+                correct: 1
+            }
+        };
+
+        function showQuestion(category) {
+            const question = questions[category];
+            document.getElementById('question-container').style.display = 'block';
+            document.getElementById('question-text').innerText = question.question;
+            document.getElementById('answer1').innerText = question.answers[0];
+            document.getElementById('answer2').innerText = question.answers[1];
+            document.getElementById('feedback').childNodes.forEach(el => el.classList.remove('correct', 'incorrect'));
+        }
+
+        function checkAnswer(answer) {
+            const question = questions[Object.keys(questions).find(key => key === document.getElementById('question-text').innerText)];
+            const feedback = document.getElementById('feedback').childNodes;
+            if (answer === question.correct) {
+                feedback[answer - 1].classList.add('correct');
+            } else {
+                feedback[answer - 1].classList.add('incorrect');
+            }
+        }
+    </script>
+</body>
+</html>
